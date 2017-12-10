@@ -76,7 +76,7 @@ public class MapsActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
+        Log.d("Maps", "Running onCreate");
         getSupportActionBar().setTitle("Map Travel Activity");
         // creating map fragment
         mapFrag = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -96,10 +96,12 @@ public class MapsActivity extends AppCompatActivity
                     LatLng newLocation = new LatLng(
                         place.latitude, place.longitude
                     ); // Latitude and longitude object used for markers
+
                     mGoogleMap.addMarker(new MarkerOptions()
                             .position(newLocation)
                             .title(dataSnapshot.getKey())
                             .snippet(place.dish)); // creating markers for each of the location in the firebase's JSON file
+                    Log.d("Database", "Successfully placed pre-determined markers.");
                 }
                 @Override
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -142,6 +144,7 @@ public class MapsActivity extends AppCompatActivity
         else if (y < -3){updateLat = 0.75;}
         else if (y < -5){updateLat = 1.0;}
         else {updateLat = 0.0;};
+        Log.d("Sensors", "Updating sensor values");
         // delay function between the
         handler.postDelayed(new Runnable() {
             @Override
@@ -321,6 +324,7 @@ public class MapsActivity extends AppCompatActivity
 
                     // permission was granted, yay! Do the
                     // location-related task you need to do.
+                    Log.d("Location Request","Successful");
                     if (ContextCompat.checkSelfPermission(this,
                             Manifest.permission.ACCESS_FINE_LOCATION)
                             == PackageManager.PERMISSION_GRANTED) {
@@ -336,6 +340,7 @@ public class MapsActivity extends AppCompatActivity
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+                    Log.d("Location request", "Failed");
                 }
                 return;
             }
